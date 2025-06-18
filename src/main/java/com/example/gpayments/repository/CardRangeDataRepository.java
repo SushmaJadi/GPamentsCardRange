@@ -6,17 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import java.util.*;
-import java.util.function.Predicate;
-
 
 @Repository
 public class CardRangeDataRepository {
     private List<CardRangeData> cardRangeDataList;
     private String primaryAccountNumber;
     private Logger logger = LoggerFactory.getLogger(CardRangeDataRepository.class);
-    private Predicate<String> pannumber;
     private Map<String, List<CardRangeData>> cardRangeDataMap;
     private Map<String, List<CardRangeData>> insertCardRangeDataMap;
     private Map<String, List<CardRangeData>> data2;
@@ -27,7 +23,6 @@ public class CardRangeDataRepository {
 
     public Map<String, List<CardRangeData>> getCardRangeDataMap(String primaryAccountNumber) {
         cardRangeDataMap = CardRangeDataDB.panAndCardRangeOfKeyValue(primaryAccountNumber, cardRangeData);
-//        logger.info("card Repository"+CardRangeDataDB.panAndCardRangeOfKeyValue(primaryAccountNumber, cardRangeData));
         return cardRangeDataMap;
     }
 
@@ -51,12 +46,8 @@ public class CardRangeDataRepository {
     }
 
     public List<CardRangeData> getCardRangeDataList(String primaryAccountNumber) {
-       /* pannumber = s -> s.equals(primaryAccountNumber) ? true : false;
-        if (pannumber.test(primaryAccountNumber) == true) {
-        */
-        cardRangeDataList = getCardRangeGetValues(primaryAccountNumber);
+       cardRangeDataList = getCardRangeGetValues(primaryAccountNumber);
         logger.info("getRangeValues" + cardRangeDataList.toString());
-        //  }
         return cardRangeDataList;
     }
 
@@ -68,9 +59,9 @@ public class CardRangeDataRepository {
     private List<CardRangeData> getCardRangeDataIfPresent(CardRangeData cardRangeData) {
         primaryAccountNumber = cardRangeData.getCardBINStartRange();
         logger.info(primaryAccountNumber);
-        List<CardRangeData> data = Optional.of(getAllCardrangeEntries(primaryAccountNumber).contains(primaryAccountNumber))
+        Optional.of( getAllCardrangeEntries(primaryAccountNumber).contains(primaryAccountNumber))
                 .map((k) -> {
-                    if (k == false) {
+                    if (!k) {
                         data2 = insertCardRangeDataMap(primaryAccountNumber, cardRangeData);
                     }
                     return data2.get(primaryAccountNumber);

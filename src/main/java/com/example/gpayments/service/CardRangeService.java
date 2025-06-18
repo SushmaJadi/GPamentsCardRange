@@ -1,6 +1,4 @@
 package com.example.gpayments.service;
-
-import com.example.gpayments.db.CardRangeDataDB;
 import com.example.gpayments.model.CardRangeData;
 import com.example.gpayments.repository.CardRangeDataRepository;
 import org.slf4j.Logger;
@@ -27,9 +25,7 @@ public class CardRangeService {
     }
 
     public List<CardRangeData> postCardRangeDataRecord(CardRangeData cardRangeData) {
-        //  logger.info(getCardRangeDataMapping(cardRangeData).toString());
         return cardRangeDataRepository.postCardRangeDataRecord(getCardRangeDataMapping(cardRangeData));
-
     }
 
     private CardRangeData getCardRangeDataMapping(CardRangeData cardRangeData) {

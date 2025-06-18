@@ -1,14 +1,13 @@
 package com.example.gpayments.db;
 
 import com.example.gpayments.model.CardRangeData;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
 public class CardRangeDataDB {
-    private static Map<String, List<CardRangeData>> cardRangeDataAssociatedPAN;
+    private static Map<String, List<CardRangeData>> cardRangeDataAssociatedPAN = new HashMap<>();
 
     public static Map<String, List<CardRangeData>> panAndCardRangeOfKeyValue(String primaryAccountNumer, CardRangeData data) {
         cardRangeDataAssociatedPAN = new HashMap<>();

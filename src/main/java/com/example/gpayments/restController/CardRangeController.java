@@ -26,16 +26,14 @@ public class CardRangeController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/getCardRangeWithPAN/{primaryAccountNumber}")
     public List<CardRangeData> getCardRangeDataList(@PathVariable("primaryAccountNumber") String primaryAccountNumber) {
-        // logger.info("in controller"+cardRangeService.getCardRangeDataListofPAN(primaryAccountNumber));
         return cardRangeService.getCardRangeDataListofPAN(primaryAccountNumber);
     }
 
 
     @RequestMapping(method = RequestMethod.POST, path = "/insertCardRange", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String postCardRangeDataRecord(@RequestBody CardRangeData cardRangeData) {
-        List<CardRangeData> cardRangeDataList = cardRangeService.postCardRangeDataRecord(cardRangeData);
-        cardRangeData = cardRangeDataList.stream().reduce((s, v) -> s).get();
-        return cardRangeData + " has been Successfully " + HttpStatus.CREATED.getReasonPhrase();
+        cardRangeData = cardRangeService.postCardRangeDataRecord(cardRangeData).stream().reduce((s, v) -> s).get();
+        return  cardRangeData+ " has been Successfully " + HttpStatus.CREATED.getReasonPhrase();
     }
 
 
